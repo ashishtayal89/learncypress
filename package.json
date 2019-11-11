@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/ashishtayal89/learncypress#readme",
   "dependencies": {
-    "axios": "^0.17.0",
+    "axios": "^0.18.1",
     "concurrently": "^3.5.0",
     "json-server": "^0.15.1",
     "react": "^16.0.0",
