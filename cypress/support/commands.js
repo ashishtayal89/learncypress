@@ -29,7 +29,8 @@ Cypress.Commands.add("seedAndVisit", (seedData = "fixture:todos") => {
   cy.route({
     url: "/api/todo",
     method: "GET",
-    response: seedData
+    response: seedData,
+    status: 200
   });
   cy.visit("/");
 });

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 import Footer from "./Footer";
-import { saveTodo, getTodoList } from "../lib/service";
+import { saveTodo, getTodoList, deleteTodo, toggleTodo } from "../lib/service";
 
 export default class TodoApp extends Component {
   constructor(props) {
@@ -15,6 +15,8 @@ export default class TodoApp extends Component {
     };
     this.onTodoChange = this.onTodoChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onDeleteTodo = this.onDeleteTodo.bind(this);
+    this.onToggleTodo = this.onToggleTodo.bind(this);
   }
 
   componentDidMount() {
@@ -23,13 +25,38 @@ export default class TodoApp extends Component {
         this.setState({ todos: data });
       },
       () => {
-        this.setState({ error: true });
+        this.setState({ error: "Failed to load todos" });
       }
     );
   }
 
   onTodoChange(e) {
     this.setState({ todoText: e.target.value });
+  }
+
+  onDeleteTodo(id) {
+    deleteTodo(id).then(
+      () => {
+        const newTodos = this.state.todos.filter(todo => todo.id !== id);
+        this.setState({ todos: newTodos });
+      },
+      () => {
+        this.setState({ error: "Failed to delete record" });
+      }
+    );
+  }
+
+  onToggleTodo(id) {
+    const todo = this.state.todos.find(todo => todo.id === id);
+    toggleTodo({ id, isComplete: !todo.isComplete }).then(() => {
+      const updatedTodos = this.state.todos.map(todo => {
+        if (todo.id === id) {
+          todo.isComplete = !todo.isComplete;
+        }
+        return todo;
+      });
+      this.setState({ todos: updatedTodos });
+    });
   }
 
   onFormSubmit(e) {
@@ -39,13 +66,12 @@ export default class TodoApp extends Component {
     saveTodo(newTodo).then(
       ({ data }) => {
         this.setState({
-          ...this.state,
           todos: this.state.todos.concat(data),
           todoText: ""
         });
       },
       () => {
-        this.setState({ error: true });
+        this.setState({ error: "Failed to add record" });
       }
     );
   }
@@ -57,7 +83,7 @@ export default class TodoApp extends Component {
         <div>
           <header className="header">
             <h1>todos</h1>
-            {error ? <span className="error">Error occured</span> : null}
+            {error ? <span className="error">{error}</span> : null}
             <TodoForm
               todoText={todoText}
               onTodoChange={this.onTodoChange}
@@ -65,9 +91,13 @@ export default class TodoApp extends Component {
             />
           </header>
           <section className="main">
-            <TodoList todos={this.state.todos} />
+            <TodoList
+              todos={this.state.todos}
+              onDeleteTodo={this.onDeleteTodo}
+              onToggleTodo={this.onToggleTodo}
+            />
           </section>
-          <Footer />
+          <Footer todos={this.state.todos} />
         </div>
       </Router>
     );
