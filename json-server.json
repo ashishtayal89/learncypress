@@ -1,5 +1,5 @@
 {
-  "port": 3030,
+  "port": 3031,
   "watch": false,
   "static": "./build",
   "routes": "./routes.json"

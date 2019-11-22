@@ -32,5 +32,5 @@ Cypress.Commands.add("seedAndVisit", (seedData = "fixture:todos") => {
     response: seedData,
     status: 200
   });
-  cy.visit("/");
+  cy.visit("http://localhost:3031/");
 });
