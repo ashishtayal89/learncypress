@@ -8,5 +8,5 @@ export const getTodoList = () => axios.get("http://localhost:3030/api/todo");
 export const deleteTodo = id =>
   axios.delete(`http://localhost:3030/api/todo/${id}`);
 
-export const toggleTodo = (id, isComplete) =>
-  axios.post("http://localhost:3030/api/toggleTodo", { id, isComplete });
+export const toggleTodo = id =>
+  axios.put(`http://localhost:3030/api/todo/${id}`);

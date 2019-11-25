@@ -47,16 +47,17 @@ export default class TodoApp extends Component {
   }
 
   onToggleTodo(id) {
-    const todo = this.state.todos.find(todo => todo.id === id);
-    toggleTodo({ id, isComplete: !todo.isComplete }).then(() => {
-      const updatedTodos = this.state.todos.map(todo => {
-        if (todo.id === id) {
-          todo.isComplete = !todo.isComplete;
-        }
-        return todo;
-      });
-      this.setState({ todos: updatedTodos });
-    });
+    toggleTodo(id).then(
+      ({ data }) => {
+        const updatedTodos = this.state.todos.map(todo =>
+          todo.id == data.id ? data : todo
+        );
+        this.setState({ todos: updatedTodos });
+      },
+      () => {
+        this.setState({ error: "Failed to update record" });
+      }
+    );
   }
 
   onFormSubmit(e) {

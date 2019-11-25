@@ -42,16 +42,17 @@ describe("Todo list", () => {
     cy.get(".error").should("have.length", 1);
   });
   it("should mark an in-complete item complete", () => {
-    cy.route({
-      url: "http://localhost:3030/api/toggleTodo",
-      method: "post",
-      body: {
-        id: 1,
-        isChecked: true
-      },
-      response: {},
-      status: 200
+    cy.fixture("todos").then(todos => {
+      const target = Cypress._.find(todos, todo => !todo.isComplete);
+      cy.route({
+        url: `http://localhost:3030/api/todo/${target.id}`,
+        method: "put",
+        body: Cypress._.merge({ ...target, isComplete: true }),
+        response: Cypress._.merge({ ...target, isComplete: true }),
+        status: 200
+      });
     });
+
     cy.get(".todo-list li").as("todos");
     cy.get("@todos")
       .filter(":not(.completed)")
@@ -65,22 +66,41 @@ describe("Todo list", () => {
       .should("contain", "Cypress");
   });
   it("should mark a complete item in-complete", () => {
-    cy.route({
-      url: "http://localhost:3030/api/toggleTodo",
-      method: "post",
-      body: {
-        id: 1,
-        isChecked: true
-      },
-      response: {},
-      status: 200
+    cy.fixture("todos").then(todos => {
+      const target = Cypress._.find(todos, todo => todo.isComplete);
+      cy.route({
+        url: `http://localhost:3030/api/todo/${target.id}`,
+        method: "put",
+        body: Cypress._.merge({ ...target, isComplete: false }),
+        response: Cypress._.merge({ ...target, isComplete: false }),
+        status: 200
+      });
     });
     cy.get(".todo-list li").as("todos");
     cy.get("@todos")
       .filter(".completed")
+      .first()
       .find(".toggle")
       .click()
       .should("not.be.checked");
+  });
+  it("should display error if issue with update", () => {
+    cy.fixture("todos").then(todos => {
+      const target = Cypress._.find(todos, todo => !todo.isComplete);
+      cy.route({
+        url: `http://localhost:3030/api/todo/${target.id}`,
+        method: "put",
+        body: Cypress._.merge({ ...target, isComplete: true }),
+        response: {},
+        status: 500
+      });
+    });
+    cy.get(".todo-list li")
+      .filter(":not(.completed)")
+      .first()
+      .find(".toggle")
+      .click();
+    cy.get(".error").should("have.length", 1);
   });
 });
 
