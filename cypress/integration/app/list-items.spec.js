@@ -11,7 +11,7 @@ describe("Todo list", () => {
   });
   it("should be able to deleted todo item", () => {
     cy.route({
-      url: "http://localhost:3030/api/todo/1",
+      url: "/api/todo/1",
       method: "delete",
       response: {},
       status: 200
@@ -28,7 +28,7 @@ describe("Todo list", () => {
   });
   it("should show error if issue with delete", () => {
     cy.route({
-      url: "http://localhost:3030/api/todo/1",
+      url: "api/todo/1",
       method: "delete",
       response: {},
       status: 500
@@ -44,7 +44,7 @@ describe("Todo list", () => {
     cy.fixture("todos").then(todos => {
       const target = Cypress._.find(todos, todo => !todo.isComplete);
       cy.route({
-        url: `http://localhost:3030/api/todo/${target.id}`,
+        url: `/api/todo/${target.id}`,
         method: "put",
         body: Cypress._.merge({ ...target, isComplete: true }),
         response: Cypress._.merge({ ...target, isComplete: true }),
@@ -68,7 +68,7 @@ describe("Todo list", () => {
     cy.fixture("todos").then(todos => {
       const target = Cypress._.find(todos, todo => todo.isComplete);
       cy.route({
-        url: `http://localhost:3030/api/todo/${target.id}`,
+        url: `/api/todo/${target.id}`,
         method: "put",
         body: Cypress._.merge({ ...target, isComplete: false }),
         response: Cypress._.merge({ ...target, isComplete: false }),
@@ -87,7 +87,7 @@ describe("Todo list", () => {
     cy.fixture("todos").then(todos => {
       const target = Cypress._.find(todos, todo => !todo.isComplete);
       cy.route({
-        url: `http://localhost:3030/api/todo/${target.id}`,
+        url: `api/todo/${target.id}`,
         method: "put",
         body: Cypress._.merge({ ...target, isComplete: true }),
         response: {},

@@ -48,7 +48,8 @@ export default class TodoApp extends Component {
   }
 
   onToggleTodo(id) {
-    toggleTodo(id).then(
+    const toggledTodo = this.state.todos.find(todo => todo.id === id);
+    toggleTodo(toggledTodo).then(
       ({ data }) => {
         const updatedTodos = this.state.todos.map(todo =>
           todo.id == data.id ? data : todo
