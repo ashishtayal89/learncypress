@@ -4,6 +4,7 @@ import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 import Footer from "./Footer";
 import { saveTodo, getTodoList, deleteTodo, toggleTodo } from "../lib/service";
+import { filterTodos } from "../lib/utils";
 
 export default class TodoApp extends Component {
   constructor(props) {
@@ -92,11 +93,16 @@ export default class TodoApp extends Component {
             />
           </header>
           <section className="main">
-            <TodoList
-              todos={this.state.todos}
-              onDeleteTodo={this.onDeleteTodo}
-              onToggleTodo={this.onToggleTodo}
-            />
+            <Route
+              path="/:filter?"
+              render={({ match }) => (
+                <TodoList
+                  todos={filterTodos(match.params.filter, this.state.todos)}
+                  onDeleteTodo={this.onDeleteTodo}
+                  onToggleTodo={this.onToggleTodo}
+                />
+              )}
+            ></Route>
           </section>
           <Footer todos={this.state.todos} />
         </div>

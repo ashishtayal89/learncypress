@@ -1,8 +1,7 @@
-beforeEach(() => {
-  cy.seedAndVisit();
-});
-
 describe("Todo list", () => {
+  beforeEach(() => {
+    cy.seedAndVisit();
+  });
   it("should display completed items", () => {
     cy.get(".todo-list li")
       .filter(".completed")
@@ -101,11 +100,5 @@ describe("Todo list", () => {
       .find(".toggle")
       .click();
     cy.get(".error").should("have.length", 1);
-  });
-});
-
-describe("The footer", () => {
-  it("should display total number of todos left", () => {
-    cy.get(".todo-count").should("contain", "4");
   });
 });

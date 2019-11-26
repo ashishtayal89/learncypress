@@ -9,17 +9,23 @@ export default props => {
   return (
     <footer className="footer">
       <span className="todo-count">
-        <strong>{totalActive}</strong> todos left
+        <strong>{totalActive}</strong> {totalActive > 1 ? "todos" : "todo"} left
       </span>
       <ul className="filters">
         <li>
-          <Link to="/">All</Link>
+          <Link className="all" to="/">
+            All
+          </Link>
         </li>{" "}
         <li>
-          <Link to="/active">Active</Link>
+          <Link className="active" to="/active">
+            Active
+          </Link>
         </li>{" "}
         <li>
-          <Link to="/completed">Completed</Link>
+          <Link className="completed" to="/completed">
+            Completed
+          </Link>
         </li>
       </ul>
     </footer>
