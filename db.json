@@ -1,19 +1,19 @@
 {
   "todo": [
     {
+      "name": "learn cypress",
+      "isComplete": false,
+      "id": 1
+    },
+    {
+      "name": "learn node",
+      "isComplete": false,
+      "id": 2
+    },
+    {
       "name": "learn electron",
       "isComplete": false,
       "id": 3
-    },
-    {
-      "name": "learn electron",
-      "isComplete": false,
-      "id": 4
-    },
-    {
-      "name": "learn javascript patterns",
-      "isComplete": false,
-      "id": 5
     }
   ]
 }
