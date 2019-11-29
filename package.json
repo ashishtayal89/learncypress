@@ -10,6 +10,7 @@
     "serve": "json-server db.json",
     "dev": "concurrently \"npm run watch\" \"npm run serve\"",
     "cypress": "cypress open",
+    "cypress:all": "cypress run",
     "diagrams": "diagrams build ./diagrams"
   },
   "repository": {

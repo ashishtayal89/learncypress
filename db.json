@@ -1,19 +1,29 @@
 {
   "todo": [
     {
-      "name": "learn cypress",
-      "isComplete": false,
-      "id": 1
+      "name": "Learn Cypress",
+      "id": 1,
+      "isComplete": false
     },
     {
-      "name": "learn node",
-      "isComplete": false,
-      "id": 2
+      "name": "Learn Less",
+      "id": 2,
+      "isComplete": false
     },
     {
-      "name": "learn electron",
-      "isComplete": false,
-      "id": 3
+      "name": "Learn Node",
+      "id": 3,
+      "isComplete": false
+    },
+    {
+      "name": "Learn DS and algo",
+      "id": 4,
+      "isComplete": false
+    },
+    {
+      "name": "Learn System design",
+      "id": 5,
+      "isComplete": false
     }
   ]
 }

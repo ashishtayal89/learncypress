@@ -14,7 +14,7 @@ describe("Footer", () => {
     it("should display plural todos in count", () => {
       cy.get(".todo-count").contains("4 todos left");
     });
-    it("should hanlde filter links", () => {
+    it("should handle filter links", () => {
       const filters = [
         { link: "active", expectedLength: 4 },
         { link: "completed", expectedLength: 1 },
